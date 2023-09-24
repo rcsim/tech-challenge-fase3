@@ -14,8 +14,4 @@ public interface VehicleService {
     void delete(Long id);
 
     void update(Long id, VehicleDTO VehicleDTO);
-
-    void checkIn(VehicleDTO vehicleDTO);
-
-    void checkOut(VehicleDTO vehicleDTO);
 }

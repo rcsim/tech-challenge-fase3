@@ -97,5 +97,4 @@ public class VehicleController {
         vehicleService.update(id, vehicleDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Veículo atualizado com sucesso!");
     }
-
 }
