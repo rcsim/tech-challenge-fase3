@@ -3,6 +3,9 @@ package com.postech30.parkingmeter.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
 @Setter
 @AllArgsConstructor
@@ -22,5 +25,6 @@ public class Vehicle {
 
     private String plate;
 
-
+    @OneToMany(mappedBy = "vehicle")
+    private List<Ticket> tickets = new ArrayList<>();
 }

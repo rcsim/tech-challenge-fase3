@@ -2,14 +2,17 @@ package com.postech30.parkingmeter.service.impl;
 
 import com.postech30.parkingmeter.dto.TicketDTO;
 import com.postech30.parkingmeter.entity.Ticket;
+import com.postech30.parkingmeter.entity.Vehicle;
 import com.postech30.parkingmeter.exceptions.ResourceNotFoundException;
 import com.postech30.parkingmeter.repository.TicketRepository;
+import com.postech30.parkingmeter.repository.VehicleRepository;
 import com.postech30.parkingmeter.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -19,10 +22,13 @@ public class TicketServiceImpl implements TicketService {
 
     @Autowired
     private TicketRepository ticketRepository;
-
+    @Autowired
+    private VehicleRepository vehicleRepository;
 
     private Ticket mapTo(Long vehicleId, Instant in, Instant out, Ticket entity) {
-        entity.setVehicleId(vehicleId);
+        Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(
+                () -> new ResourceNotFoundException("Não é possível criar um ticket para um veículo inexistente."));
+        entity.setVehicle(vehicle);
         entity.setCheckIn(in);
         entity.setCheckOut(out);
         return entity;
@@ -32,15 +38,26 @@ public class TicketServiceImpl implements TicketService {
     @Transactional
     public @Valid TicketDTO checkIn(TicketDTO ticketDTO) {
         Ticket ticketEntity = new Ticket();
-        ticketEntity = mapTo(ticketDTO.getVehicleId(), Instant.now(), null, ticketEntity);
+        Long parkingHours =  ticketDTO.getParkingHours();
+        Instant checkOut = null;
+
+        if (parkingHours > 0L) {
+            checkOut = Instant.now().plusSeconds(parkingHours*3600);
+        }
+
+        ticketEntity = mapTo(ticketDTO.getVehicleId(), Instant.now(), checkOut, ticketEntity);
         return new TicketDTO(ticketRepository.save(ticketEntity));
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<TicketDTO> searchOpenTickets() {
-        List<Ticket> list = ticketRepository.findByCheckOut(null);
-        return list.stream().map(TicketDTO::new).collect(Collectors.toList());
+        List<Ticket> list = ticketRepository.findByCheckOutIsNullOrCheckOutGreaterThanEqual(Instant.now());
+        return list.stream().map(x -> new TicketDTO(x, calcParkingHours(x))).collect(Collectors.toList());
+    }
+
+    private Long calcParkingHours(Ticket ticket) {
+        return Duration.between( ticket.getCheckIn(), Instant.now()).toHours();
     }
 
     @Override
@@ -52,7 +69,7 @@ public class TicketServiceImpl implements TicketService {
         }
 
         Ticket ticket = ticketRepository.getReferenceById(id);
-        ticket = mapTo(ticket.getVehicleId(), ticket.getCheckIn(), Instant.now(), ticket);
+        ticket = mapTo(ticket.getVehicle().getId(), ticket.getCheckIn(), Instant.now(), ticket);
         return new TicketDTO(ticketRepository.save(ticket));
     }
 }

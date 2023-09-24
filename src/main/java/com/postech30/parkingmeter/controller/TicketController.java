@@ -25,7 +25,7 @@ public class TicketController {
     TicketService ticketService;
 
     @Operation(summary = "Cadastro de Tickets",
-            description = "Adiciona um Ticket na base de dados do sistema, apenas o id do veículo é passado pelo usuário")
+            description = "Adiciona um Ticket na base de dados do sistema, apenas o id do veículo é de preenchimento obrigatório")
     @ApiResponses({
             @ApiResponse(responseCode = "201", description = "Ticket adicionado"),
             @ApiResponse(responseCode = "400", description = "Request incorreto"),

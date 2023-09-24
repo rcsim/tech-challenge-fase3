@@ -18,11 +18,11 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long vehicleId;
+    @ManyToOne
+    @JoinColumn(name = "vehicle_id")
+    private Vehicle vehicle;
 
     private Instant checkIn;
 
     private Instant checkOut;
-
-
 }
