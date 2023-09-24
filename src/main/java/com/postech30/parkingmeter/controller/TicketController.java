@@ -38,7 +38,7 @@ public class TicketController {
     }
 
     @Operation(summary = "Busca de Tickets abertos",
-            description = "Busca todos os Tickets sem checkout na base de dados do sistema")
+            description = "Busca todos os Tickets sem checkout na base de dados do sistema e calcula a quantidade de horas que eles estão estacionados")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Lista de Tickets cadastrados no sistema. Retorna uma lista vazia caso não existam Tickets cadastrados"),
     })
