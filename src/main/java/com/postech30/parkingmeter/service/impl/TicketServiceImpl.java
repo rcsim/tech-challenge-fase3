@@ -3,6 +3,7 @@ package com.postech30.parkingmeter.service.impl;
 import com.postech30.parkingmeter.dto.TicketDTO;
 import com.postech30.parkingmeter.entity.Ticket;
 import com.postech30.parkingmeter.entity.Vehicle;
+import com.postech30.parkingmeter.exceptions.BadRequestException;
 import com.postech30.parkingmeter.exceptions.ResourceNotFoundException;
 import com.postech30.parkingmeter.repository.TicketRepository;
 import com.postech30.parkingmeter.repository.VehicleRepository;
@@ -70,7 +71,7 @@ public class TicketServiceImpl implements TicketService {
         Ticket ticket = ticketRepository.getReferenceById(id);
 
         if (ticket.getCheckOut() != null) {
-            throw new ResourceNotFoundException("Não foi encontrado ticket aberto com esse Id");
+            throw new BadRequestException("Não é possível fazer o checkout desse ticket.");
         }
 
         ticket = mapTo(ticket.getVehicle().getId(), ticket.getCheckIn(), Instant.now(), ticket);

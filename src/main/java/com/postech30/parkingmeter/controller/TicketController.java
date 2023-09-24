@@ -49,7 +49,7 @@ public class TicketController {
     }
 
     @Operation(summary = "Conclusão de Tickets",
-            description = "Atualiza o campo checkOut de um Ticket na base de dados do sistema, apenas o id do veículo é passado pelo usuário")
+            description = "Atualiza o campo checkOut de um Ticket na base de dados do sistema, apenas o id do ticket é passado pelo usuário")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "Ticket fechado"),
             @ApiResponse(responseCode = "400", description = "Request incorreto"),
