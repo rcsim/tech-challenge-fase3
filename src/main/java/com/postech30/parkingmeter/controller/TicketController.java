@@ -56,9 +56,9 @@ public class TicketController {
             @ApiResponse(responseCode = "404", description = "Ticket não encontrado"),
             @ApiResponse(responseCode = "422", description = "Parâmetro não pode ser nulo")
     })
-    @PatchMapping("/checkout")
-    public ResponseEntity<TicketDTO> checkOut(@RequestBody @Valid TicketDTO ticketDTO) {
-        ticketDTO = ticketService.checkOut(ticketDTO);
+    @PostMapping("/checkout")
+    public ResponseEntity<TicketDTO> checkOut(@RequestParam Long id) {
+        TicketDTO ticketDTO = ticketService.checkOut(id);
         return  ResponseEntity.ok(ticketDTO);
     }
 }

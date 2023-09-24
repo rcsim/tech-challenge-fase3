@@ -62,14 +62,18 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional
-    public @Valid TicketDTO checkOut(TicketDTO ticketDTO) {
-        long id = ticketDTO.getId();
+    public @Valid TicketDTO checkOut(Long id) {
         if (!ticketRepository.existsById(id)) {
             throw new ResourceNotFoundException("Ticket não encontrado");
         }
 
         Ticket ticket = ticketRepository.getReferenceById(id);
+
+        if (ticket.getCheckOut() != null) {
+            throw new ResourceNotFoundException("Não foi encontrado ticket aberto com esse Id");
+        }
+
         ticket = mapTo(ticket.getVehicle().getId(), ticket.getCheckIn(), Instant.now(), ticket);
-        return new TicketDTO(ticketRepository.save(ticket));
+        return new TicketDTO(ticketRepository.save(ticket), calcParkingHours(ticket));
     }
 }

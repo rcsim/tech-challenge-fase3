@@ -11,5 +11,5 @@ public interface TicketService {
 
     List<TicketDTO> searchOpenTickets();
 
-    @Valid TicketDTO checkOut(TicketDTO ticketDTO);
+    @Valid TicketDTO checkOut(Long id);
 }
