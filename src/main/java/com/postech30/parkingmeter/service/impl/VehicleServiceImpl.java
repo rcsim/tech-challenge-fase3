@@ -72,6 +72,23 @@ public class VehicleServiceImpl implements VehicleService {
         vehicleRepository.save(vehicle);
     }
 
+    @Override
+    @Transactional
+    public void checkIn(VehicleDTO vehicleDTO) {
+        long id = vehicleDTO.getId();
+        if (!vehicleRepository.existsById(id)) {
+            throw new ResourceNotFoundException(VEHICLE_NOT_FOUND);
+        }
+
+
+    }
+
+    @Override
+    @Transactional
+    public void checkOut(VehicleDTO vehicleDTO) {
+
+    }
+
     private Vehicle mapTo(VehicleDTO dto, Vehicle entity) {
         entity.setManufacturer(dto.getManufacturer());
         entity.setModel(dto.getModel());
