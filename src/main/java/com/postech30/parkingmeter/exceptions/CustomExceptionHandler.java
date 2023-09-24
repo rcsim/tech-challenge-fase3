@@ -43,4 +43,15 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, status);
     }
 
+    @ExceptionHandler(BadRequestException.class)
+    protected ResponseEntity<Object> badRequest(BadRequestException e, HttpServletRequest request) {
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("timestamp", Instant.now());
+        body.put("status", status.value());
+        body.put("error", e.getMessage());
+        body.put("path", request.getRequestURI());
+        return new ResponseEntity<>(body, status);
+    }
 }
