@@ -3,8 +3,8 @@ package com.postech30.parkingmeter.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
 import java.io.Serializable;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -19,11 +19,5 @@ public class User implements Serializable {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
-
-    private String email;
-
-    private String telephone;
-
-    private String address;
+    private Person person;
 }
