@@ -26,7 +26,4 @@ public class User implements Serializable {
 
     private String address;
 
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
-
 }
