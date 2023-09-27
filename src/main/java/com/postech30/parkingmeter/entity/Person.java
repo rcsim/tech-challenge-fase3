@@ -10,18 +10,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Entity
-@Table(name = "tb_person")
-public abstract class Person implements Serializable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public abstract class Person {
 
     private String name;
-
-    @Enumerated(EnumType.STRING)
-    private UserType userType;
 
     private String email;
 

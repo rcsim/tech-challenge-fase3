@@ -13,9 +13,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_pessoa_juridica")
-public class LegalPerson extends Person implements Serializable {
+public class LegalPerson extends Person {
 
     private String cnpj;
 }

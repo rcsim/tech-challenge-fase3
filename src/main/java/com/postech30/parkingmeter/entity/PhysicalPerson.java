@@ -10,9 +10,7 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "tb_pessoa_fisica")
-public class PhysicalPerson extends Person implements Serializable {
+public class PhysicalPerson extends Person {
 
     private String cpf;
 }
