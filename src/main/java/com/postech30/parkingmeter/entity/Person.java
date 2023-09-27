@@ -3,7 +3,6 @@ package com.postech30.parkingmeter.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.UUID;
 import java.io.Serializable;
 
 @Getter
@@ -16,8 +15,8 @@ import java.io.Serializable;
 public abstract class Person implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String name;
 

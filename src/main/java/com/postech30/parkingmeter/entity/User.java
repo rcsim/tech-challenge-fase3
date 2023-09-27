@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,8 +15,18 @@ import java.util.UUID;
 public class User implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private Person person;
+    private String name;
+
+    private String email;
+
+    private String telephone;
+
+    private String address;
+
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+
 }
