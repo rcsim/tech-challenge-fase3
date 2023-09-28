@@ -10,6 +10,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Person {
 
     private String name;

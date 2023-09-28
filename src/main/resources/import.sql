@@ -14,3 +14,5 @@ INSERT INTO tb_users(name, email, telephone, address)  VALUES('jonh5', 'jonh5@gm
 INSERT INTO tb_users(name, email, telephone, address)  VALUES('jonh6', 'jonh6@gmail.com', '999629962', 'rua nova nº 16');
 
 
+
+
