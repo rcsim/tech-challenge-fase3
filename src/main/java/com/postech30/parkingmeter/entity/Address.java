@@ -11,16 +11,14 @@ import java.io.Serializable;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-//@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-//@DiscriminatorColumn(name = "personType", discriminatorType = DiscriminatorType.STRING)
-public abstract class Person {
+@Table(name = "tb_address")
+public class Address implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  Long idPerson;
-
-    private String email;
-
-    private String telephone;
-
+    private Long id;
+    private String logradouro;
+    private String bairro;
+    private  String uf;
+    private  String cep;
 }

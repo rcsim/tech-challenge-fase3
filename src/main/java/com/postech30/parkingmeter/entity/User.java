@@ -2,6 +2,9 @@ package com.postech30.parkingmeter.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.DiscriminatorOptions;
+import org.hibernate.validator.constraints.br.CNPJ;
+import org.hibernate.validator.constraints.br.CPF;
 
 import java.io.Serializable;
 
@@ -9,9 +12,10 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Entity
-@Table(name = "tb_users")
+//@Table(name = "tb_users")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "personType", discriminatorType = DiscriminatorType.STRING)
 public class User implements Serializable {
 
     @Id
@@ -24,5 +28,8 @@ public class User implements Serializable {
 
     private String telephone;
 
-    private String address;
+    @ManyToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
+
 }
