@@ -5,11 +5,9 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
 @Entity
 @Table(name = "tb_users")
 public class User implements Serializable {
@@ -23,7 +21,5 @@ public class User implements Serializable {
     private String email;
 
     private String telephone;
-
-    private String address;
 
 }

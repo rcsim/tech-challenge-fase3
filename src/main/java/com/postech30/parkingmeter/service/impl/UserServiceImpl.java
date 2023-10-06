@@ -5,17 +5,43 @@ import com.postech30.parkingmeter.entity.User;
 import com.postech30.parkingmeter.repository.UserRepository;
 import com.postech30.parkingmeter.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Objects;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    @Autowired
-    private UserRepository userRepository;
+    final UserRepository userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     @Override
-    @Transactional
+    @Transactional(readOnly = true)
+    public Page<UserDTO> searchUser(String text, Pageable pageable) {
+
+        Page<User> pageUser;
+        if(Objects.equals(text, " ")) {
+            pageUser = userRepository.findAll(pageable);
+        } else {
+            pageUser = userRepository
+                    .findByNameIgnoreCaseContainingOrEmailIgnoreCaseContainingOrTelephoneIgnoreCaseContaining(
+                            text,
+                            text,
+                            text,
+                            pageable
+                    );
+        }
+        return pageUser.map(UserDTO::new);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public UserDTO findById(Long id) {
         User entity = userRepository.findById(id).get();
         return new UserDTO(entity);

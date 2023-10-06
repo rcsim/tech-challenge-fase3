@@ -2,23 +2,23 @@ package com.postech30.parkingmeter.dto;
 
 import com.postech30.parkingmeter.entity.Person;
 import com.postech30.parkingmeter.entity.User;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDTO {
 
     private Long id;
     private String name;
+    private String email;
+    private String telephone;
 
     public UserDTO(User entity) {
         id = entity.getId();
         name = entity.getName();
+        email = entity.getEmail();
+        telephone = entity.getTelephone();
     }
 
 }

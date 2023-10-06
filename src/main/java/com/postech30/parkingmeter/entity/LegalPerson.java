@@ -1,7 +1,6 @@
 package com.postech30.parkingmeter.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,7 +12,10 @@ import java.io.Serializable;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Entity
+@DiscriminatorValue("PJ")
 public class LegalPerson extends Person {
 
+    private String razaoSocial;
     private String cnpj;
 }
