@@ -3,13 +3,9 @@ package com.postech30.parkingmeter.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.io.Serializable;
-
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@Data
 @Entity
 //@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 //@DiscriminatorColumn(name = "personType", discriminatorType = DiscriminatorType.STRING)

@@ -1,17 +1,13 @@
 package com.postech30.parkingmeter.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 @DiscriminatorValue("PJ")
 public class LegalPerson extends Person {

@@ -5,10 +5,10 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@Getter
-@Setter
+
 @AllArgsConstructor
 @NoArgsConstructor
+@Data
 @Entity
 @DiscriminatorValue("PF")
 public class PhysicalPerson extends Person {
