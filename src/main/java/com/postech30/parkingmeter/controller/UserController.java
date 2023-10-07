@@ -3,6 +3,7 @@ package com.postech30.parkingmeter.controller;
 import com.postech30.parkingmeter.dto.UserDTO;
 import com.postech30.parkingmeter.service.UserService;
 import jakarta.transaction.Transactional;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,5 +31,10 @@ public class UserController {
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         var user = userService.findById(id);
         return ResponseEntity.ok(user);
+    }
+    @PostMapping
+    public ResponseEntity<UserDTO> createUserSave(@RequestBody @Valid UserDTO userDTO) {
+        var userSave = userService.createUser(userDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(userSave);
     }
 }

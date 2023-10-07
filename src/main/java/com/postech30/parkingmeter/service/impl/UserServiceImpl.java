@@ -9,6 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.Objects;
 
@@ -45,6 +47,19 @@ public class UserServiceImpl implements UserService {
     public UserDTO findById(Long id) {
         User entity = userRepository.findById(id).get();
         return new UserDTO(entity);
+    }
+    @Override
+    public UserDTO createUser(UserDTO userDTO) {
+        User user = new User();
+        user = mapTo(userDTO, user);
+        return new UserDTO(userRepository.save(user));
+    }
+
+    private User mapTo(UserDTO userDTO, User user) {
+        user.setName(userDTO.getName());
+        user.setEmail(userDTO.getEmail());
+        user.setTelephone(user.getTelephone());
+        return user;
     }
 
 }

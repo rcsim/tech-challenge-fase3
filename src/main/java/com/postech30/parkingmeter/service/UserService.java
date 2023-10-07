@@ -7,5 +7,6 @@ import org.springframework.data.domain.Pageable;
 public interface UserService {
     Page<UserDTO> searchUser(String searchUser, Pageable pageable);
     UserDTO findById(Long id);
+    UserDTO createUser(UserDTO userDTO);
 
 }
