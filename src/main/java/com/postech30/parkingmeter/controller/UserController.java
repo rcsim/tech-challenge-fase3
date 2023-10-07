@@ -37,6 +37,7 @@ public class UserController {
         var userSave = userService.createUser(userDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(userSave);
     }
+    @PutMapping(value = "{id}")
     public ResponseEntity<String> updatingUser(@PathVariable Long id, @RequestBody @Valid UserDTO userDTO) {
         userService.updateUser(id, userDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Usuário foi atualizado!!");
