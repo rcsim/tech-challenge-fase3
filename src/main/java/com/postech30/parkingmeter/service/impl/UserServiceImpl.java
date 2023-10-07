@@ -45,14 +45,21 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserDTO findById(Long id) {
-        User entity = userRepository.findById(id).get();
-        return new UserDTO(entity);
+        User userFind = userRepository.findById(id).get();
+        return new UserDTO(userFind);
     }
     @Override
     public UserDTO createUser(UserDTO userDTO) {
-        User user = new User();
-        user = mapTo(userDTO, user);
-        return new UserDTO(userRepository.save(user));
+        User userCreate = new User();
+        userCreate = mapTo(userDTO, userCreate);
+        return new UserDTO(userRepository.save(userCreate));
+    }
+    @Override
+    @Transactional
+    public void updateUser(Long id, UserDTO userDTO){
+        User userUpdate = userRepository.getReferenceById(id);
+        userUpdate = mapTo(userDTO, userUpdate);
+        userRepository.save(userUpdate);
     }
 
     private User mapTo(UserDTO userDTO, User user) {

@@ -8,5 +8,6 @@ public interface UserService {
     Page<UserDTO> searchUser(String searchUser, Pageable pageable);
     UserDTO findById(Long id);
     UserDTO createUser(UserDTO userDTO);
+    void updateUser(Long id, UserDTO userDTO);
 
 }
