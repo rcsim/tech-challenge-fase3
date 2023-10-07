@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,6 +62,11 @@ public class UserServiceImpl implements UserService {
         userUpdate = mapTo(userDTO, userUpdate);
         userRepository.save(userUpdate);
     }
+    @Override
+    @Transactional(propagation = Propagation.SUPPORTS)
+    public void deleteUser(Long id){
+        userRepository.deleteById(id);
+    }
 
     private User mapTo(UserDTO userDTO, User user) {
         user.setName(userDTO.getName());
@@ -68,5 +74,4 @@ public class UserServiceImpl implements UserService {
         user.setTelephone(user.getTelephone());
         return user;
     }
-
 }

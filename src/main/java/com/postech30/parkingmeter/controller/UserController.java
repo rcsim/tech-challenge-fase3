@@ -42,4 +42,9 @@ public class UserController {
         userService.updateUser(id, userDTO);
         return ResponseEntity.status(HttpStatus.OK).body("Usuário foi atualizado!!");
     }
+    @DeleteMapping(value = "{id}")
+    public ResponseEntity<String> deletingUser(@PathVariable Long id) {
+        userService.deleteUser(id);
+        return ResponseEntity.status(HttpStatus.OK).body("Usuário foi Excluído!!");
+    }
 }
