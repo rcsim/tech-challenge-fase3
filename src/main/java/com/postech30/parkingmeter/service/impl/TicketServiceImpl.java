@@ -7,6 +7,7 @@ import com.postech30.parkingmeter.exceptions.BadRequestException;
 import com.postech30.parkingmeter.exceptions.ResourceNotFoundException;
 import com.postech30.parkingmeter.repository.TicketRepository;
 import com.postech30.parkingmeter.repository.VehicleRepository;
+import com.postech30.parkingmeter.repository.PriceRepository;
 import com.postech30.parkingmeter.service.TicketService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,13 +26,17 @@ public class TicketServiceImpl implements TicketService {
     private TicketRepository ticketRepository;
     @Autowired
     private VehicleRepository vehicleRepository;
+    @Autowired
+    private PriceRepository priceRepository;
 
-    private Ticket mapTo(Long vehicleId, Instant in, Instant out, Ticket entity) {
+    private Ticket mapTo(Long vehicleId, Instant in, Instant out, String status, Double price, Ticket entity) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(
                 () -> new ResourceNotFoundException("Não é possível criar um ticket para um veículo inexistente."));
         entity.setVehicle(vehicle);
         entity.setCheckIn(in);
         entity.setCheckOut(out);
+        entity.setStatus(status);
+        entity.setPrice(price);
         return entity;
     }
 
@@ -41,12 +46,13 @@ public class TicketServiceImpl implements TicketService {
         Ticket ticketEntity = new Ticket();
         Long parkingHours =  ticketDTO.getParkingHours();
         Instant checkOut = null;
+        Double hourPrice = priceRepository.findLastHourPrice();
 
         if (parkingHours > 0L) {
             checkOut = Instant.now().plusSeconds(parkingHours*3600);
         }
 
-        ticketEntity = mapTo(ticketDTO.getVehicleId(), Instant.now(), checkOut, ticketEntity);
+        ticketEntity = mapTo(ticketDTO.getVehicleId(), Instant.now(), checkOut, "open", parkingHours*hourPrice, ticketEntity);
         return new TicketDTO(ticketRepository.save(ticketEntity));
     }
 
@@ -73,8 +79,9 @@ public class TicketServiceImpl implements TicketService {
         if (ticket.getCheckOut() != null) {
             throw new BadRequestException("Não é possível fazer o checkout desse ticket.");
         }
-
-        ticket = mapTo(ticket.getVehicle().getId(), ticket.getCheckIn(), Instant.now(), ticket);
-        return new TicketDTO(ticketRepository.save(ticket), calcParkingHours(ticket));
+        Long parkingHours =  calcParkingHours(ticket);
+        Double hourPrice = priceRepository.findLastHourPrice();
+        ticket = mapTo(ticket.getVehicle().getId(), ticket.getCheckIn(), Instant.now(), "closed", parkingHours*hourPrice, ticket);
+        return new TicketDTO(ticketRepository.save(ticket), parkingHours);
     }
 }
