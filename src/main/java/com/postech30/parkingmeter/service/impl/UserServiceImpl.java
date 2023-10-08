@@ -71,7 +71,7 @@ public class UserServiceImpl implements UserService {
     private User mapTo(UserDTO userDTO, User user) {
         user.setName(userDTO.getName());
         user.setEmail(userDTO.getEmail());
-        user.setTelephone(user.getTelephone());
+        user.setTelephone(userDTO.getTelephone());
         return user;
     }
 }
