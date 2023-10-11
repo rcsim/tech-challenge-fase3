@@ -1,6 +1,5 @@
 package com.postech30.parkingmeter.dto;
 
-import com.postech30.parkingmeter.entity.Person;
 import com.postech30.parkingmeter.entity.User;
 import lombok.*;
 
