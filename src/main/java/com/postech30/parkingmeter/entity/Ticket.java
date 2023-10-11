@@ -25,4 +25,8 @@ public class Ticket {
     private Instant checkIn;
 
     private Instant checkOut;
+
+    private String status;
+
+    private Double price;
 }
