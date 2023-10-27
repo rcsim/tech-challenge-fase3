@@ -1,5 +1,6 @@
 package com.postech30.parkingmeter.controller;
 
+import com.postech30.parkingmeter.dto.CardDTO;
 import com.postech30.parkingmeter.dto.UserDTO;
 import com.postech30.parkingmeter.service.UserService;
 import jakarta.transaction.Transactional;
@@ -11,6 +12,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/user")
@@ -30,6 +33,11 @@ public class UserController {
     @GetMapping("/{id}")
     public ResponseEntity<UserDTO> findById(@PathVariable Long id) {
         var user = userService.findById(id);
+        return ResponseEntity.ok(user);
+    }
+    @GetMapping(value = "{id}/cards")
+    public ResponseEntity<List<CardDTO>> findApplianceDependent(@PathVariable Long id) {
+        var user = userService.findCardByUserId(id);
         return ResponseEntity.ok(user);
     }
     @PostMapping

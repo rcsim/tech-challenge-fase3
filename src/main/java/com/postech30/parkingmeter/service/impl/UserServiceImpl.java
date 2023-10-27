@@ -1,18 +1,19 @@
 package com.postech30.parkingmeter.service.impl;
 
+import com.postech30.parkingmeter.dto.CardDTO;
 import com.postech30.parkingmeter.dto.UserDTO;
+import com.postech30.parkingmeter.entity.Card;
 import com.postech30.parkingmeter.entity.User;
+import com.postech30.parkingmeter.repository.CardRepository;
 import com.postech30.parkingmeter.repository.UserRepository;
 import com.postech30.parkingmeter.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.List;
 import java.util.Objects;
 
 @Service
@@ -20,8 +21,11 @@ public class UserServiceImpl implements UserService {
 
     final UserRepository userRepository;
 
-    public UserServiceImpl(UserRepository userRepository) {
+    final CardRepository cardRepository;
+
+    public UserServiceImpl(UserRepository userRepository, CardRepository cardRepository) {
         this.userRepository = userRepository;
+        this.cardRepository = cardRepository;
     }
 
     @Override
@@ -66,6 +70,13 @@ public class UserServiceImpl implements UserService {
     @Transactional(propagation = Propagation.SUPPORTS)
     public void deleteUser(Long id){
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public List<CardDTO> findCardByUserId(Long id) {
+        User user = userRepository.getReferenceById(id);
+        List<Card> userCard = cardRepository.findByUserId(user.getId());
+        return userCard.stream().map(CardDTO::new).toList();
     }
 
     private User mapTo(UserDTO userDTO, User user) {
