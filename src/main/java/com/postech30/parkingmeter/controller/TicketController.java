@@ -1,6 +1,8 @@
 package com.postech30.parkingmeter.controller;
 
+import com.postech30.parkingmeter.dto.EmailDTO;
 import com.postech30.parkingmeter.dto.TicketDTO;
+import com.postech30.parkingmeter.service.EmailService;
 import com.postech30.parkingmeter.service.TicketService;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -23,6 +25,9 @@ public class TicketController {
 
     @Autowired
     TicketService ticketService;
+
+    @Autowired
+    EmailService service;
 
     @Operation(summary = "Cadastro de Tickets",
             description = "Adiciona um Ticket na base de dados do sistema, apenas o id do veículo é de preenchimento obrigatório")
