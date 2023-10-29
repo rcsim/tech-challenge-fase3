@@ -15,6 +15,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -62,7 +63,7 @@ public class TicketController {
             @ApiResponse(responseCode = "422", description = "Parâmetro não pode ser nulo")
     })
     @PostMapping("/checkout")
-    public ResponseEntity<TicketDTO> checkOut(@RequestParam Long id) {
+    public ResponseEntity<TicketDTO> checkOut(@RequestParam Long id) throws IOException {
         TicketDTO ticketDTO = ticketService.checkOut(id);
         return  ResponseEntity.ok(ticketDTO);
     }

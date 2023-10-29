@@ -7,10 +7,12 @@ import com.postech30.parkingmeter.service.EmailService;
 import com.postech30.parkingmeter.service.ScheduleService;
 import com.postech30.parkingmeter.service.TicketService;
 import com.postech30.parkingmeter.service.UserService;
+import com.postech30.parkingmeter.util.PDFGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
@@ -31,6 +33,8 @@ public class ScheduleServiceImpl  implements ScheduleService {
     @Scheduled(initialDelay = 1000,fixedDelay =30 * 60 * 1000 )
     @Override
     public void sendNotification() {
+
+
         List<TicketDTO> openTickets = ticketService.searchOpenTickets();
 
         openTickets.forEach(ticket -> {

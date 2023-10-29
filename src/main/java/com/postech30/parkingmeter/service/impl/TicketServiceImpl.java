@@ -1,6 +1,8 @@
 package com.postech30.parkingmeter.service.impl;
 
+import com.postech30.parkingmeter.dto.EmailDTO;
 import com.postech30.parkingmeter.dto.TicketDTO;
+import com.postech30.parkingmeter.dto.UserDTO;
 import com.postech30.parkingmeter.entity.Ticket;
 import com.postech30.parkingmeter.entity.Vehicle;
 import com.postech30.parkingmeter.exceptions.BadRequestException;
@@ -8,12 +10,16 @@ import com.postech30.parkingmeter.exceptions.ResourceNotFoundException;
 import com.postech30.parkingmeter.repository.TicketRepository;
 import com.postech30.parkingmeter.repository.VehicleRepository;
 import com.postech30.parkingmeter.repository.PriceRepository;
+import com.postech30.parkingmeter.service.EmailService;
 import com.postech30.parkingmeter.service.TicketService;
+import com.postech30.parkingmeter.service.UserService;
+import com.postech30.parkingmeter.util.PDFGenerator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
 import java.time.Duration;
 import java.time.Instant;
 import java.util.List;
@@ -28,6 +34,13 @@ public class TicketServiceImpl implements TicketService {
     private VehicleRepository vehicleRepository;
     @Autowired
     private PriceRepository priceRepository;
+
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private EmailService emailService;
 
     private Ticket mapTo(Long vehicleId, Instant in, Instant out, String status, Double price, Ticket entity) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(
@@ -69,7 +82,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional
-    public @Valid TicketDTO checkOut(Long id) {
+    public @Valid TicketDTO checkOut(Long id) throws IOException {
         if (!ticketRepository.existsById(id)) {
             throw new ResourceNotFoundException("Ticket não encontrado");
         }
@@ -81,7 +94,18 @@ public class TicketServiceImpl implements TicketService {
         }
         Long parkingHours =  calcParkingHours(ticket);
         Double hourPrice = priceRepository.findLastHourPrice();
+
         ticket = mapTo(ticket.getVehicle().getId(), ticket.getCheckIn(), Instant.now(), "closed", parkingHours*hourPrice, ticket);
+        PDFGenerator.generatePDFFromHTML(ticket.getVehicle().getPlate(),ticket.getCheckIn(),ticket.getCheckOut(),parkingHours*hourPrice);
+        enviarComprovante(ticket.getVehicle().getId());
         return new TicketDTO(ticketRepository.save(ticket), parkingHours);
+    }
+
+    private void enviarComprovante(Long id) {
+
+        List<UserDTO> users = userService.findUserByVehicleId(id);
+        users.forEach(user -> {
+            emailService.sendMail(new EmailDTO(user.getEmail(), user.getEmail()));
+        });
     }
 }
