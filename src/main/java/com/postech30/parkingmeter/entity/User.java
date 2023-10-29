@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -21,5 +22,11 @@ public class User implements Serializable {
     private String email;
 
     private String telephone;
+
+    @ManyToMany
+    @JoinTable(name = "user_vehicle",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "vehicle_id"))
+    private List<Vehicle> vehicles;
 
 }

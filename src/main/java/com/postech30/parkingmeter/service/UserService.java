@@ -14,4 +14,6 @@ public interface UserService {
     void updateUser(Long id, UserDTO userDTO);
     void  deleteUser(Long id);
     List<CardDTO> findCardByUserId(Long id);
+
+    List<UserDTO> findUserByVehicleId(Long id);
 }

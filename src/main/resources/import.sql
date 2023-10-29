@@ -14,3 +14,10 @@ INSERT INTO tb_users(name, email, telephone)  VALUES('jonh3', 'jonh3@gmail.com',
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh4', 'jonh4@gmail.com', '999429942');
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh5', 'jonh5@gmail.com', '999529952');
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh6', 'jonh6@gmail.com', '999629962');
+
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (1,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (2,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (3,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (4,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (5,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (6,1);
