@@ -4,8 +4,10 @@ import com.postech30.parkingmeter.dto.CardDTO;
 import com.postech30.parkingmeter.dto.UserDTO;
 import com.postech30.parkingmeter.entity.Card;
 import com.postech30.parkingmeter.entity.User;
+import com.postech30.parkingmeter.entity.Vehicle;
 import com.postech30.parkingmeter.repository.CardRepository;
 import com.postech30.parkingmeter.repository.UserRepository;
+import com.postech30.parkingmeter.repository.VehicleRepository;
 import com.postech30.parkingmeter.service.UserService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -23,9 +25,12 @@ public class UserServiceImpl implements UserService {
 
     final CardRepository cardRepository;
 
-    public UserServiceImpl(UserRepository userRepository, CardRepository cardRepository) {
+    final VehicleRepository vehicleRepository;
+
+    public UserServiceImpl(UserRepository userRepository, CardRepository cardRepository,VehicleRepository vehicleRepository) {
         this.userRepository = userRepository;
         this.cardRepository = cardRepository;
+        this.vehicleRepository = vehicleRepository;
     }
 
     @Override
@@ -77,6 +82,12 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.getReferenceById(id);
         List<Card> userCard = cardRepository.findByUserId(user.getId());
         return userCard.stream().map(CardDTO::new).toList();
+    }
+
+    @Override
+    public List<UserDTO> findUserByVehicleId(Long id) {
+        List<User> users = userRepository.findUserByVehicleId(id);
+        return users.stream().map(UserDTO::new).toList();
     }
 
     private User mapTo(UserDTO userDTO, User user) {

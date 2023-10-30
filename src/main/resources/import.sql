@@ -2,7 +2,7 @@ INSERT INTO tb_vehicles(manufacturer, model, plate) VALUES ('Ferrari', 'Ferrari 
 
 INSERT INTO tb_tickets(vehicle_id, check_in, check_out, status, price) VALUES (1, '2023-09-24T10:10:01.176581600Z', '2023-09-24T23:10:01.176581600Z', 'closed', 91.00);
 INSERT INTO tb_tickets(vehicle_id, check_in, check_out, status, price) VALUES (1, '2023-09-24T10:10:01.176581600Z', null, 'open', 0.00);
-INSERT INTO tb_tickets(vehicle_id, check_in, check_out, status, price) VALUES (1, '2023-09-24T10:10:01.176581600Z', '2023-09-24T12:10:01.176581600Z', 'closed', 14.00);
+INSERT INTO tb_tickets(vehicle_id, check_in, check_out, status, price) VALUES (1, '2023-09-24T10:10:01.176581600Z', '2023-09-24T12:10:01.176581600Z', 'closed', 1.00);
 INSERT INTO tb_tickets(vehicle_id, check_in, check_out, status, price) VALUES (1, '2023-09-24T17:17:01.176581600Z', '2023-09-24T23:10:01.176581600Z', 'closed', 42.00);
 INSERT INTO tb_tickets(vehicle_id, check_in, check_out, status, price) VALUES (1, '2023-09-24T17:10:01.176581600Z', null, 'open', 0.00);
 
@@ -14,3 +14,10 @@ INSERT INTO tb_users(name, email, telephone)  VALUES('jonh3', 'jonh3@gmail.com',
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh4', 'jonh4@gmail.com', '999429942');
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh5', 'jonh5@gmail.com', '999529952');
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh6', 'jonh6@gmail.com', '999629962');
+
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (1,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (2,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (3,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (4,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (5,1);
+INSERT INTO user_vehicle (user_id, vehicle_id) VALUES (6,1);

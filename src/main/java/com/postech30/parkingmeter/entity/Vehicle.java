@@ -27,4 +27,7 @@ public class Vehicle {
 
     @OneToMany(mappedBy = "vehicle")
     private List<Ticket> tickets = new ArrayList<>();
+
+    @ManyToMany(mappedBy = "vehicles")
+    private List<User> users;
 }
