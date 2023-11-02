@@ -27,18 +27,18 @@ public class PDFGenerator {
     }
 
     private static String  generateHtmlForPdf(){
-        return "<!DOCTYPE html> <html> <head> <meta charset=\"UTF-8\"> <title>Recibo de Pagamento</title> <style> body { font-family: Arial, sans-serif; } .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; } .header { background-color: #0078d4; color: #fff; padding: 10px; text-align: center; } .content { background-color: #fff; padding: 20px; } .footer { background-color: #0078d4; color: #fff; padding: 10px; text-align: center; } </style> </head> <body> <div class=\"container\"> <div class=\"header\"> <h1>Recibo de Pagamento</h1> </div> <div class=\"content\"> <p>Veículo: {{vehicle}}</p> <p>Horário de Entrada: {{checkIn}}</p> <p>Horário de Saída: {{checkOut}}</p> <p>Valor Pago: R$ {{valorPago}}</p> </div> <div class=\"footer\"> <p>&copy; 2023 Estacionamento XYZ</p> </div> </div> </body> </html>";
+        return "<!DOCTYPE html> <html> <head> <meta charset=\"UTF-8\"> <title>Recibo de Pagamento</title> <style> body { font-family: Arial, sans-serif; } .container { max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #ccc; } .header { background-color: #0078d4; color: #fff; padding: 10px; text-align: center; } .content { background-color: #fff; padding: 20px; } .footer { background-color: #0078d4; color: #fff; padding: 10px; text-align: center; } </style> </head> <body> <div class=\"container\"> <div class=\"header\"> <h1>Recibo de Pagamento</h1> </div> <div class=\"content\"> <p> Placa do Veículo: {vehicle}</p> <p>Horário de Entrada: {checkIn}</p> <p>Horário de Saída: {checkOut}</p> <p>Valor Pago: R$ {valorPago}</p> </div> <div class=\"footer\"> <p>&copy; 2023 Estacionamento XYZ</p> </div> </div> </body> </html>";
     }
     private static  String transformHtml(String html,String vehicleName, Instant CheckIn,Instant CheckOut, double valorPago){
-        TemplateEngine templateEngine = new TemplateEngine();
+        String htmlFormatted = html;
+        htmlFormatted = htmlFormatted.replace("{vehicle}", vehicleName);
+        htmlFormatted = htmlFormatted.replace("{checkIn}", CheckIn.toString());
+        htmlFormatted = htmlFormatted.replace("{checkOut}", CheckOut.toString());
+        htmlFormatted = htmlFormatted.replace("{valorPago}",""+valorPago);
 
-        Context context = new Context();
-        context.setVariable("vehicle", vehicleName);
-        context.setVariable("checkIn", CheckIn.toString());
-        context.setVariable("checkOut", CheckOut.toString());
-        context.setVariable("valorPago",""+valorPago);
+        return htmlFormatted;
 
-        return  templateEngine.process(html, context);
+
 
     }
 }
