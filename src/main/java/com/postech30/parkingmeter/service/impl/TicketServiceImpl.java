@@ -14,6 +14,7 @@ import com.postech30.parkingmeter.service.EmailService;
 import com.postech30.parkingmeter.service.TicketService;
 import com.postech30.parkingmeter.service.UserService;
 import com.postech30.parkingmeter.util.PDFGenerator;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -82,7 +83,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     @Transactional
-    public @Valid TicketDTO checkOut(Long id) throws IOException {
+    public @Valid TicketDTO checkOut(Long id) throws IOException, MessagingException {
         if (!ticketRepository.existsById(id)) {
             throw new ResourceNotFoundException("Ticket não encontrado");
         }
@@ -101,11 +102,15 @@ public class TicketServiceImpl implements TicketService {
         return new TicketDTO(ticketRepository.save(ticket), parkingHours);
     }
 
-    private void enviarComprovante(Long id) {
+    private void enviarComprovante(Long id) throws MessagingException {
 
         List<UserDTO> users = userService.findUserByVehicleId(id);
         users.forEach(user -> {
-            emailService.sendMail(new EmailDTO(user.getEmail(), user.getEmail()));
+            try {
+                emailService.sendMailWithAttachment(new EmailDTO("marcosfernandesalves@gmail.com", "marcosfernandesalves@gmail.com"));
+            } catch (MessagingException e) {
+
+            }
         });
     }
 }

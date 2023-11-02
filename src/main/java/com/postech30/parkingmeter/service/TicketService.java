@@ -1,6 +1,7 @@
 package com.postech30.parkingmeter.service;
 
 import com.postech30.parkingmeter.dto.TicketDTO;
+import jakarta.mail.MessagingException;
 import jakarta.validation.Valid;
 
 import java.io.IOException;
@@ -12,5 +13,5 @@ public interface TicketService {
 
     List<TicketDTO> searchOpenTickets();
 
-    @Valid TicketDTO checkOut(Long id) throws IOException;
+    @Valid TicketDTO checkOut(Long id) throws IOException, MessagingException;
 }

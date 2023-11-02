@@ -4,6 +4,7 @@ import com.postech30.parkingmeter.dto.EmailDTO;
 import com.postech30.parkingmeter.dto.TicketDTO;
 import com.postech30.parkingmeter.service.EmailService;
 import com.postech30.parkingmeter.service.TicketService;
+import jakarta.mail.MessagingException;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class TicketController {
             @ApiResponse(responseCode = "422", description = "Parâmetro não pode ser nulo")
     })
     @PostMapping("/checkout")
-    public ResponseEntity<TicketDTO> checkOut(@RequestParam Long id) throws IOException {
+    public ResponseEntity<TicketDTO> checkOut(@RequestParam Long id) throws IOException, MessagingException {
         TicketDTO ticketDTO = ticketService.checkOut(id);
         return  ResponseEntity.ok(ticketDTO);
     }

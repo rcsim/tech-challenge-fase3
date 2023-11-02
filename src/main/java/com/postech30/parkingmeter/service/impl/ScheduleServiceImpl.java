@@ -34,7 +34,6 @@ public class ScheduleServiceImpl  implements ScheduleService {
     @Override
     public void sendNotification() {
 
-
         List<TicketDTO> openTickets = ticketService.searchOpenTickets();
 
         openTickets.forEach(ticket -> {
