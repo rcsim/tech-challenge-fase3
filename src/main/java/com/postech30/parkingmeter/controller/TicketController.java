@@ -64,6 +64,7 @@ public class TicketController {
     })
     @PostMapping("/checkout")
     public ResponseEntity<TicketDTO> checkOut(@RequestParam Long id) throws IOException {
+        System.out.println("Teste");
         TicketDTO ticketDTO = ticketService.checkOut(id);
         return  ResponseEntity.ok(ticketDTO);
     }

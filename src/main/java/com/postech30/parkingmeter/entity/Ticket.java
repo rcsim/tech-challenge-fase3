@@ -18,6 +18,10 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private Long userId;
+
+    private Long cardId;
+
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
     private Vehicle vehicle;
@@ -27,6 +31,10 @@ public class Ticket {
     private Instant checkOut;
 
     private String status;
+
+    private String pixCode;
+
+    private int paymentType;
 
     private Double price;
 }

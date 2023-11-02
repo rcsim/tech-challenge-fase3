@@ -8,6 +8,8 @@ INSERT INTO tb_tickets(vehicle_id, check_in, check_out, status, price) VALUES (1
 
 INSERT INTO tb_price(hour_price) VALUES (7.00);
 
+INSERT INTO tb_payment_method (user_id, type, card_number, card_holder, cvv, card_expiration_date)  VALUES(1,'Crédito', '1234567890123456', 'teste', '123', '09/24')
+
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh1', 'jonh1@gmail.com', '999129912');
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh2', 'jonh2@gmail.com', '999229922');
 INSERT INTO tb_users(name, email, telephone)  VALUES('jonh3', 'jonh3@gmail.com', '999329932');
