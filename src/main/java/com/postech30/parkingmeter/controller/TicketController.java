@@ -64,6 +64,7 @@ public class TicketController {
             @ApiResponse(responseCode = "422", description = "Parâmetro não pode ser nulo")
     })
     @PostMapping("/checkout")
+
     public ResponseEntity<TicketDTO> checkOut(@RequestParam Long id) throws IOException, MessagingException {
         TicketDTO ticketDTO = ticketService.checkOut(id);
         return  ResponseEntity.ok(ticketDTO);

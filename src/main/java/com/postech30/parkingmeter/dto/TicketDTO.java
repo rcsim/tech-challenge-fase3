@@ -56,6 +56,8 @@ public class TicketDTO {
 
     public TicketDTO(Ticket entity, Long parkingHours){
         this.id = entity.getId();
+        this.userId = entity.getUserId();
+        this.cardId = entity.getCardId();
         this.vehicleId = entity.getVehicle().getId();
         this.checkIn = entity.getCheckIn();
         this.checkOut = entity.getCheckOut();
