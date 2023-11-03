@@ -34,23 +34,18 @@ public class ScheduleServiceImpl  implements ScheduleService {
     @Override
     public void sendNotification() {
 
-
         List<TicketDTO> openTickets = ticketService.searchOpenTickets();
 
         openTickets.forEach(ticket -> {
-            List<UserDTO> users = userService.findUserByVehicleId(ticket.getVehicleId());
+            UserDTO user = userService.findById(ticket.getUserId());
 
             if (ticket.getParkingHours() <= 1) {
-                users.forEach(user -> {
                     emailService.sendMail(new EmailDTO(user.getEmail(), user.getEmail()));
-                });
             }
 
             if (ticket.getParkingHours() == 0 && ticket.getCheckOut() == null &&
                     Duration.between(ticket.getCheckIn(), Instant.now()).toHours() <= 1L) {
-                users.forEach(user -> {
                     emailService.sendMail(new EmailDTO(user.getEmail(), user.getEmail()));
-                });
             }
         });
     }
