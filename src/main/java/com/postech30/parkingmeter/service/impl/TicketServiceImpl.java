@@ -4,13 +4,13 @@ import com.postech30.parkingmeter.controller.TicketController;
 import com.postech30.parkingmeter.dto.EmailDTO;
 import com.postech30.parkingmeter.dto.TicketDTO;
 import com.postech30.parkingmeter.dto.UserDTO;
+import com.postech30.parkingmeter.entity.Card;
 import com.postech30.parkingmeter.entity.Ticket;
+import com.postech30.parkingmeter.entity.User;
 import com.postech30.parkingmeter.entity.Vehicle;
 import com.postech30.parkingmeter.exceptions.BadRequestException;
 import com.postech30.parkingmeter.exceptions.ResourceNotFoundException;
-import com.postech30.parkingmeter.repository.TicketRepository;
-import com.postech30.parkingmeter.repository.VehicleRepository;
-import com.postech30.parkingmeter.repository.PriceRepository;
+import com.postech30.parkingmeter.repository.*;
 import com.postech30.parkingmeter.service.EmailService;
 import com.postech30.parkingmeter.service.TicketService;
 import com.postech30.parkingmeter.service.UserService;
@@ -45,6 +45,12 @@ public class TicketServiceImpl implements TicketService {
     private PriceRepository priceRepository;
 
     @Autowired
+    private UserRepository userRepository;
+
+    @Autowired
+    private CardRepository cardRepository;
+
+    @Autowired
     private UserService userService;
 
     @Autowired
@@ -57,13 +63,19 @@ public class TicketServiceImpl implements TicketService {
                          Long cardID, String pixCode, Ticket entity) {
         Vehicle vehicle = vehicleRepository.findById(vehicleId).orElseThrow(
                 () -> new ResourceNotFoundException("Não é possível criar um ticket para um veículo inexistente."));
+        User user = userRepository.findById(userId).orElseThrow(
+                () -> new ResourceNotFoundException("Não é possível criar um ticket para umusuário inexistente."));
+
+        Card card = cardRepository.findById(cardID).orElseThrow(
+                () -> new ResourceNotFoundException("Não é possível criar um ticket para cartão inexistente."));
+
         entity.setVehicle(vehicle);
-        entity.setUserId(userId);
+        entity.setUser(user);
         entity.setCheckIn(in);
         entity.setCheckOut(out);
         entity.setStatus(status);
         entity.setPaymentType(paymentType);
-        entity.setCardId(cardID);
+        entity.setCard(card);
         entity.setPixCode(pixCode);
         entity.setPrice(price);
         return entity;
@@ -149,8 +161,8 @@ public class TicketServiceImpl implements TicketService {
         Double price =  parkingHours*hourPrice;
 
 
-        ticket = mapTo(ticket.getVehicle().getId(),  ticket.getUserId(), ticket.getCheckIn(), Instant.now(), "closed", price,
-                ticket.getPaymentType(), ticket.getCardId(), null, ticket);
+        ticket = mapTo(ticket.getVehicle().getId(),  ticket.getUser().getId(), ticket.getCheckIn(), Instant.now(), "closed", price,
+                ticket.getPaymentType(), ticket.getCard().getId(), null, ticket);
 
         Ticket jobTicket = ticket;
 

@@ -7,7 +7,6 @@ import java.time.Instant;
 import java.util.List;
 
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-
     List<Ticket> findByCheckOutIsNullOrCheckOutGreaterThanEqual(Instant instant);
 
 }
