@@ -25,6 +25,13 @@ Tecnologias e ferramentas utilizadas
 Principais dificuldades encontradas
 * Entendimento das regras de negócio: As regras de negócio do projeto eram complexas e exigiam um entendimento cuidadoso.
 
+
+
+# Deploy AWS
+![Arquitetura Aws](src/main/resources/Aws/arquitetura.png)
+
+Evidencias em fotos na pasta: src/main/resources/Aws
+
 ### Conclusões 
 
 O projeto foi desenvolvido com sucesso, atendendo aos requisitos do desafio. As tecnologias e ferramentas utilizadas foram adequadas para o propósito do projeto e contribuíram para o desenvolvimento eficiente e robusto do sistema.
