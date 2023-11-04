@@ -2,8 +2,10 @@ package com.postech30.parkingmeter.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.postech30.parkingmeter.entity.Ticket;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Null;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -45,8 +47,8 @@ public class TicketDTO {
 
     public TicketDTO(Ticket entity){
         this.id = entity.getId();
-        this.userId = entity.getUserId();
-        this.cardId = entity.getCardId();
+        this.userId = entity.getUser().getId();
+        this.cardId = getCardId(entity);
         this.vehicleId = entity.getVehicle().getId();
         this.checkIn = entity.getCheckIn();
         this.checkOut = entity.getCheckOut();
@@ -56,13 +58,24 @@ public class TicketDTO {
 
     public TicketDTO(Ticket entity, Long parkingHours){
         this.id = entity.getId();
-        this.userId = entity.getUserId();
-        this.cardId = entity.getCardId();
+        this.userId = entity.getUser().getId();
+        this.cardId = getCardId(entity);
         this.vehicleId = entity.getVehicle().getId();
         this.checkIn = entity.getCheckIn();
         this.checkOut = entity.getCheckOut();
         this.pixCode = entity.getPixCode();
         this.paymentType = entity.getPaymentType();
         this.parkingHours = parkingHours;
+    }
+
+    private Long getCardId(Ticket entity){
+        Long cardId = 0L;
+        try{
+            cardId = entity.getCard().getId();
+        }
+        catch(NullPointerException ex){
+
+        }
+        return cardId;
     }
 }

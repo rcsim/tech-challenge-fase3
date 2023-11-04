@@ -1,5 +1,6 @@
 package com.postech30.parkingmeter.entity;
 
+import jakarta.annotation.Nullable;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,9 +19,13 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
-    private Long cardId;
+    @ManyToOne
+    @JoinColumn(name = "card_id")
+    private Card card;
 
     @ManyToOne
     @JoinColumn(name = "vehicle_id")
