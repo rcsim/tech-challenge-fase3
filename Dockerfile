@@ -1,4 +1,4 @@
-mvmFROM maven:latest AS MAVEN_BUILD
+FROM maven:latest AS MAVEN_BUILD
 COPY ./ ./
 RUN mvn clean package
 
