@@ -1,4 +1,4 @@
-\c parkingmeter_d;
+\c parkingmeter_db;
 
 INSERT INTO tb_vehicles(manufacturer, model, plate) VALUES ('Ferrari', 'Ferrari 288GTO', 'ABC1D23');
 INSERT INTO tb_vehicles(manufacturer, model, plate) VALUES ('Ferrari', 'Ferrari 289GTO', 'ABC1D2322');
