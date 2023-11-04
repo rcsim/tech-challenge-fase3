@@ -66,8 +66,12 @@ public class TicketServiceImpl implements TicketService {
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new ResourceNotFoundException("Não é possível criar um ticket para umusuário inexistente."));
 
-        Card card = cardRepository.findById(cardID).orElseThrow(
-                () -> new ResourceNotFoundException("Não é possível criar um ticket para cartão inexistente."));
+        Card card = null;
+        if(cardID != null){
+            card  = cardRepository.findById(cardID).orElseThrow(
+                    () -> new ResourceNotFoundException("Não é possível criar um ticket para cartão inexistente."));
+        }
+
 
         entity.setVehicle(vehicle);
         entity.setUser(user);

@@ -48,7 +48,7 @@ public class TicketDTO {
     public TicketDTO(Ticket entity){
         this.id = entity.getId();
         this.userId = entity.getUser().getId();
-        this.cardId = entity.getCard().getId();
+        this.cardId = getCardId(entity);
         this.vehicleId = entity.getVehicle().getId();
         this.checkIn = entity.getCheckIn();
         this.checkOut = entity.getCheckOut();
@@ -59,12 +59,23 @@ public class TicketDTO {
     public TicketDTO(Ticket entity, Long parkingHours){
         this.id = entity.getId();
         this.userId = entity.getUser().getId();
-        this.cardId = entity.getCard().getId();
+        this.cardId = getCardId(entity);
         this.vehicleId = entity.getVehicle().getId();
         this.checkIn = entity.getCheckIn();
         this.checkOut = entity.getCheckOut();
         this.pixCode = entity.getPixCode();
         this.paymentType = entity.getPaymentType();
         this.parkingHours = parkingHours;
+    }
+
+    private Long getCardId(Ticket entity){
+        Long cardId = 0L;
+        try{
+            cardId = entity.getCard().getId();
+        }
+        catch(NullPointerException ex){
+
+        }
+        return cardId;
     }
 }
