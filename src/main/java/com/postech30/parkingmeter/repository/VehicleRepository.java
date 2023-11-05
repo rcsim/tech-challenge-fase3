@@ -11,6 +11,8 @@ public interface VehicleRepository extends JpaRepository<Vehicle, Long> {
 
     Page<Vehicle> findByManufacturerIgnoreCaseContainingOrModelIgnoreCaseContainingOrPlateIgnoreCaseContaining(String manufacturer, String model, String plate, Pageable pageable);
 
+    Vehicle findByPlateIgnoreCaseContaining(String plate);
+
 
 
 }

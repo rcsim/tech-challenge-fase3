@@ -23,6 +23,7 @@ public class Vehicle {
 
     private String model;
 
+    @Column(unique=true)
     private String plate;
 
     @OneToMany(mappedBy = "vehicle")

@@ -72,6 +72,10 @@ public class TicketServiceImpl implements TicketService {
                     () -> new ResourceNotFoundException("Não é possível criar um ticket para cartão inexistente."));
         }
 
+        if(card.getUserId() != user.getId()){
+            throw new BadRequestException("Cartão não pertence a esse usuário.");
+        }
+
 
         entity.setVehicle(vehicle);
         entity.setUser(user);

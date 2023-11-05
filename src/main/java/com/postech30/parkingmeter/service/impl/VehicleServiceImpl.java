@@ -2,6 +2,7 @@ package com.postech30.parkingmeter.service.impl;
 
 import com.postech30.parkingmeter.dto.VehicleDTO;
 import com.postech30.parkingmeter.entity.Vehicle;
+import com.postech30.parkingmeter.exceptions.BadRequestException;
 import com.postech30.parkingmeter.exceptions.ResourceNotFoundException;
 import com.postech30.parkingmeter.repository.VehicleRepository;
 import com.postech30.parkingmeter.service.VehicleService;
@@ -21,9 +22,15 @@ public class VehicleServiceImpl implements VehicleService {
     private VehicleRepository vehicleRepository;
 
     private static final String VEHICLE_NOT_FOUND = "Veículo não encontrado";
+    private static final String VEHICLE_DUPLICATED = "Placa do veículo já foi cadastrada";
     @Override
     public VehicleDTO saveVehicle(VehicleDTO vehicleDTO) {
         Vehicle vehicleEntity = new Vehicle();
+
+        if(vehicleRepository.findByPlateIgnoreCaseContaining(vehicleDTO.getPlate()) != null){
+           throw new BadRequestException(VEHICLE_DUPLICATED);
+        }
+
         vehicleEntity = mapTo(vehicleDTO, vehicleEntity);
         return new VehicleDTO(vehicleRepository.save(vehicleEntity));
     }
@@ -67,8 +74,14 @@ public class VehicleServiceImpl implements VehicleService {
             throw new ResourceNotFoundException(VEHICLE_NOT_FOUND);
         }
 
+        Vehicle vehicleByPlate = vehicleRepository.findByPlateIgnoreCaseContaining(vehicleDTO.getPlate());
+
         Vehicle vehicle = vehicleRepository.getReferenceById(id);
         vehicle = mapTo(vehicleDTO, vehicle);
+
+        if(vehicle.getId() !=  vehicleByPlate.getId()){
+            throw new BadRequestException(VEHICLE_DUPLICATED);
+        }
         vehicleRepository.save(vehicle);
     }
 
@@ -78,4 +91,5 @@ public class VehicleServiceImpl implements VehicleService {
         entity.setPlate(dto.getPlate());
         return entity;
     }
+
 }
