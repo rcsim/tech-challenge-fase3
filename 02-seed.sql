@@ -3,7 +3,7 @@
 
 -- INSERT INTO tb_vehicles
 INSERT INTO tb_vehicles(manufacturer, model, plate) VALUES ('Ferrari', 'Ferrari 288GTO', 'ABC1D23');
-INSERT INTO tb_vehicles(manufacturer, model, plate) VALUES ('Ferrari', 'Ferrari 289GTO', 'ABC1D2322');
+INSERT INTO tb_vehicles(manufacturer, model, plate) VALUES ('Ferrari', 'Ferrari 289GTO', 'ABC1D24');
 
 -- INSERT INTO tb_price
 INSERT INTO tb_price(hour_price) VALUES (7.00);
