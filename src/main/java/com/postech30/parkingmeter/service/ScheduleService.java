@@ -4,5 +4,5 @@ import jakarta.mail.MessagingException;
 
 public interface ScheduleService {
 
-    public void sendNotification() throws MessagingException;
+    public void sendNotification() ;
 }
