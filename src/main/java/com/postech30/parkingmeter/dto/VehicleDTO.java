@@ -3,6 +3,7 @@ package com.postech30.parkingmeter.dto;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.postech30.parkingmeter.entity.Vehicle;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,6 +27,7 @@ public class VehicleDTO {
 
     @JsonProperty
     @NotBlank(message = "A placa é um campo de preenchimento obrigatório")
+    @Size(min = 7, max = 7, message = "A placa deve ter 7 dígitos")
     private String plate;
 
     public VehicleDTO(Vehicle entity){
