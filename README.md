@@ -1,4 +1,4 @@
-# tech-challenge-fase3  
+# Tech-Challenge-fase3  
 ## Repositório para o Tech Challenge - Grupo 30
 Este repositório contém o código-fonte e a documentação para o Tech Challenge - Fase 3, desenvolvido pelo Grupo 30.
 
